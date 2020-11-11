@@ -14,12 +14,14 @@ public class Facade implements Iproxy {
 	private static Facade facade;
 
 	private ArrayList<Componente> compos;
+	private ArrayList<Componente> compos2;
 
 	Pattern pattern = Pattern
 			.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
 	private Facade() {
 		this.compos = new ArrayList<Componente>();
+		this.compos2 = new ArrayList<Componente>();
 	}
 
 	public static Facade getInstance() {
@@ -59,6 +61,7 @@ public class Facade implements Iproxy {
 	
 	
 	public ResponseEntity<?> crearBiciusuario(String info) {
+		this.compos2.clear();
         ResponseEntity<?> ok = ResponseEntity.ok(false);
         String[] parametros = info.split("-");
         if (this.compos.isEmpty()) {
@@ -139,11 +142,11 @@ public class Facade implements Iproxy {
                                                 parametros[2]);
                                         Stakeholder bici2 = new BiciUsuario2(parametros[3], parametros[4]);
 
-                                        this.compos.add(bici1);
+                                        this.compos2.add(bici1);
                                         pro.usuarios.add(bici2);
 
-                                        ok = ResponseEntity.ok(bici1);
                                         System.out.println("Ha sido creado correctamente 2");
+                                        ok = ResponseEntity.ok(bici1);
 
                                     } else {
                                         System.out.println("La contraseña ingresada no es valida");
@@ -152,7 +155,7 @@ public class Facade implements Iproxy {
                                     System.out.println("El nombre ingresado es demasiado largo");
                                 }
                             } else {
-
+                            	System.out.println("El Usuario ya existe");
                             }
                         }
                     }
@@ -185,8 +188,8 @@ public class Facade implements Iproxy {
                                 this.compos.add(bici1);
                                 pro.usuarios.add(bici2);
 
-                                ok = ResponseEntity.ok(bici1);
                                 System.out.println("Ha sido creado correctamente 3");
+                                ok = ResponseEntity.ok(bici1);
 
                             } else {
                                 System.out.println("La contraseña ingresada no es valida");
@@ -203,6 +206,7 @@ public class Facade implements Iproxy {
                 System.out.println("Los parametros no coinciden");
             }
         }
+        this.compos.addAll(compos2);
         return ok;
     }
 }

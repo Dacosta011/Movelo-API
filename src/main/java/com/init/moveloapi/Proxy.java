@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 public class Proxy implements Iproxy {
-
+//andres@gmail.com-Andres01*  daniel@gmail.com-Daniel01*
 	private boolean permitido = false;
 	public ArrayList<Stakeholder> usuarios;
 	private Facade fac;
@@ -33,30 +33,20 @@ public class Proxy implements Iproxy {
 	public ResponseEntity<?> registro(@RequestBody String info) {
 		ResponseEntity<?> ok = null;
 		this.fac = Facade.getInstance();
-		ok = fac.llamado(info);
+		ok = fac.crearBiciusuario(info);
 		return ok;
 	}
 
 	@Override
 	public ResponseEntity<?> login(@RequestBody String info) {
-		for(Stakeholder s : this.usuarios) {
-			System.out.println(s);
-		}
-		String[] parametros = info.split("-");
-		System.out.println(info);
 		ResponseEntity<?> res = ResponseEntity.ok(false);
-		if (!usuarios.isEmpty()) {
-			for (Stakeholder stake : this.usuarios) {
-				if (stake.getlogin().equals(parametros[0]) && stake.getpassword().equals(parametros[1])) {
-					this.permitido = true;
-					res = ResponseEntity.ok(true);
-				} else {
-					this.permitido = false;
-					res = ResponseEntity.ok(false);
-				}
+		String[] partes = info.split("-");
+		for(Stakeholder stake : this.usuarios) {
+			if(stake.getlogin().equals(partes[0]) && stake.getpassword().equals(partes[1])) {
+				res = ResponseEntity.ok(true);
+				this.permitido = true;
+				break;
 			}
-		}else {
-			System.out.println("no hay usuarios");
 		}
 		return res;
 	}
