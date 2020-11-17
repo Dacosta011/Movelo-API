@@ -50,6 +50,7 @@ public class Proxy implements Iproxy {
 		}
 		return res;
 	}
+	
 
 	@Override
 	public ResponseEntity<?> llamado(String info) {
