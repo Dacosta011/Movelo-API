@@ -123,7 +123,7 @@ public class Facade implements Iproxy {
 				}
 			}
 		}else {
-			System.out.println("formato incorrecto");
+			System.out.println("formato incorrectoo");
 		}
 		
 		
