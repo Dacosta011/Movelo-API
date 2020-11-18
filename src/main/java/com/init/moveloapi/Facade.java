@@ -104,6 +104,32 @@ public class Facade implements Iproxy {
 		return ok;
 	}
 	
+	public ResponseEntity<?> BuscaUsuario(String info){
+		System.out.println("buscando ...");
+		System.out.println(info);
+		ResponseEntity<?> ok = ResponseEntity.ok(false);
+		String[] parametros = info.split("_");
+		if(parametros.length == 2) {
+			for(Componente c : this.compos) {
+				if(c instanceof BiciUsuario) {
+					System.out.println(((BiciUsuario) c).getEmail());
+					if(((BiciUsuario) c).getEmail().equals(parametros[1])) {
+						ok = ResponseEntity.ok(c);
+					}else {
+						System.out.println("no coincide");
+					}
+				}else {
+					System.out.println("no es biciusuario");
+				}
+			}
+		}else {
+			System.out.println("formato incorrecto");
+		}
+		
+		
+		return ok;
+	}
+	
 	public ResponseEntity<?> crearBiciusuario(String info) {
 		this.compos2.clear();
         ResponseEntity<?> ok = ResponseEntity.ok(false);
