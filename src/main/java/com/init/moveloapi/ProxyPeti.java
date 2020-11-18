@@ -24,5 +24,11 @@ public class ProxyPeti {
 		pro = Proxy.getInstance();
 		return pro.login(info);
 	}
+	
+	@RequestMapping(value = "llamado", method = RequestMethod.POST)
+	public ResponseEntity<?> llamado(@RequestBody String info){
+		pro = Proxy.getInstance();
+		return pro.llamado(info);
+	}
 
 }

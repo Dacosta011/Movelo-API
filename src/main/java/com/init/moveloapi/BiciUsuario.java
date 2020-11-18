@@ -1,11 +1,14 @@
 package com.init.moveloapi;
 
+import java.util.ArrayList;
+
 public class BiciUsuario implements Componente{
 
 	   private String nombre;
 	    private String email;
 	    private String rol;
 	    private String id;
+	    public ArrayList<Ruta> rutas;
 
 	    public BiciUsuario() {
 
@@ -13,6 +16,7 @@ public class BiciUsuario implements Componente{
 	        this.nombre = "";
 	        this.rol = "";
 	        this.id = "";
+	        this.rutas = new ArrayList<Ruta>();
 	    }
 
 	    public BiciUsuario(String email, String nombre, String rol, String id) {
@@ -21,6 +25,7 @@ public class BiciUsuario implements Componente{
 	        this.nombre = nombre;
 	        this.rol = rol;
 	        this.id = id;
+	        this.rutas = new ArrayList<Ruta>();
 	    }
 
 	    public String getNombre() {

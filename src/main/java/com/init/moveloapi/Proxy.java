@@ -54,8 +54,16 @@ public class Proxy implements Iproxy {
 
 	@Override
 	public ResponseEntity<?> llamado(String info) {
-		// TODO Auto-generated method stub
-		return null;
+		ResponseEntity<?> res = ResponseEntity.ok(false);
+		this.fac = Facade.getInstance();
+		
+		if(permitido) {
+			res = fac.llamado(info);
+		}else {
+			
+		}
+		
+		return res;
 	}
 
 }

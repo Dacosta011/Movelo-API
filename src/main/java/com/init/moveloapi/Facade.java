@@ -15,7 +15,7 @@ public class Facade implements Iproxy {
 
 	private ArrayList<Componente> compos;
 	private ArrayList<Componente> compos2;
-
+	
 	Pattern pattern = Pattern
 			.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
@@ -39,7 +39,7 @@ public class Facade implements Iproxy {
 
 	@Override
 	public ResponseEntity<?> llamado(String info) {
-		ResponseEntity<?> res = null;
+		ResponseEntity<?> res = ResponseEntity.ok(false);
 		if (info.contains("-")) {
 			String[] partes = info.split("-");
 			try {
@@ -59,6 +59,50 @@ public class Facade implements Iproxy {
 		return res;
 	}
 	
+	public ResponseEntity<?> CreaPunto(String info){
+		ResponseEntity<?> ok = ResponseEntity.ok(false);
+		String[] parametros = info.split("-");
+		if(parametros.length == 5) {
+			for(Componente c: this.compos) {
+				if(c instanceof BiciUsuario) {
+					if(((BiciUsuario) c).getEmail().equals(parametros[1])) {
+						ArrayList<Ruta> rutas = ((BiciUsuario) c).rutas;
+						for(Ruta r: rutas) {
+							if(r.getId() == Integer.parseInt(parametros[2])) {
+								PuntoGeografico punto = new PuntoGeografico(Float.parseFloat(parametros[3]), Float.parseFloat(parametros[4]));
+								r.puntos.add(punto);
+								ok = ResponseEntity.ok(true);
+								for(PuntoGeografico pun: r.puntos) {
+									System.out.println(pun);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return ok;
+	}
+	
+	public ResponseEntity<?> creaRuta(String info){
+		ResponseEntity<?> ok = ResponseEntity.ok(false);
+		String[] parametros = info.split("-");
+		if(parametros.length == 4) {
+			for(Componente c : this.compos) {
+				if(c instanceof BiciUsuario) {
+					if(parametros[1].equals(((BiciUsuario) c).getEmail())) {
+						Ruta r = new Ruta(Integer.parseInt(parametros[2]), Float.parseFloat(parametros[3]));
+						((BiciUsuario) c).rutas.add(r);
+						ok = ResponseEntity.ok(true);
+					}
+				}
+			}
+		}
+		
+		
+		return ok;
+	}
 	
 	public ResponseEntity<?> crearBiciusuario(String info) {
 		this.compos2.clear();
