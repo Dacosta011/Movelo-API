@@ -40,8 +40,8 @@ public class Facade implements Iproxy {
 	@Override
 	public ResponseEntity<?> llamado(String info) {
 		ResponseEntity<?> res = ResponseEntity.ok(false);
-		if (info.contains("-")) {
-			String[] partes = info.split("-");
+		if (info.contains("_")) {
+			String[] partes = info.split("_");
 			try {
 				Class thisclass = Facade.class;
 				Method[] methods = thisclass.getDeclaredMethods();
@@ -61,7 +61,7 @@ public class Facade implements Iproxy {
 	
 	public ResponseEntity<?> CreaPunto(String info){
 		ResponseEntity<?> ok = ResponseEntity.ok(false);
-		String[] parametros = info.split("-");
+		String[] parametros = info.split("_");
 		if(parametros.length == 5) {
 			for(Componente c: this.compos) {
 				if(c instanceof BiciUsuario) {
@@ -87,14 +87,14 @@ public class Facade implements Iproxy {
 	
 	public ResponseEntity<?> creaRuta(String info){
 		ResponseEntity<?> ok = ResponseEntity.ok(false);
-		String[] parametros = info.split("-");
+		String[] parametros = info.split("_");
 		if(parametros.length == 4) {
 			for(Componente c : this.compos) {
 				if(c instanceof BiciUsuario) {
 					if(parametros[1].equals(((BiciUsuario) c).getEmail())) {
 						Ruta r = new Ruta(Integer.parseInt(parametros[2]), Float.parseFloat(parametros[3]));
 						((BiciUsuario) c).rutas.add(r);
-						ok = ResponseEntity.ok(true);
+						ok = ResponseEntity.ok(((BiciUsuario) c).rutas);
 					}
 				}
 			}
